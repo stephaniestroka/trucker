@@ -15,6 +15,7 @@ function initialize() {
 
   // Enables the polyline drawing control. Click on the map to start drawing a
   // polyline. Each click will add a new vertice. Double-click to stop drawing.
+
   drawingManager = new google.maps.drawing.DrawingManager({
     drawingMode: google.maps.drawing.OverlayType.POLYLINE,
     drawingControl: true,
@@ -31,6 +32,7 @@ function initialize() {
   });
   drawingManager.setMap(map);
 
+
   // Snap-to-road when the polyline is completed.
   drawingManager.addListener('polylinecomplete', function(poly) {
     var path = poly.getPath();
@@ -38,6 +40,7 @@ function initialize() {
     placeIdArray = [];
     runSnapToRoad(path);
   });
+
 
   // Clear button. Click to remove all polylines.
   $('#clear').click(function(ev) {
