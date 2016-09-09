@@ -3,7 +3,17 @@
 # ~~~~
 
 # An example controller showing a sample home page
-GET     /                           controllers.HomeController.index
+GET     /                            controllers.HomeController.index
+
+POST    /register                    controllers.RegistrationController.register
+
+POST    /push/:uuid                  controllers.PushController.respondToRequest(uuid : String)
+
+## Push Controller
+PUT     /push/send/:method/:userId   controllers.PushController.push(userId: String, method: String)
+GET     /push/queue/:jobId           controllers.PushController.status(jobId: String)
+PUT     /push/respond/:jobId         controllers.PushController.respondToRequest(jobId: String)
+GET     /push/response/:jobId        controllers.PushController.getResponse(jobId: String)
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
