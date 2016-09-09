@@ -51,13 +51,14 @@
   top: 50%;
   background: #dddddd;
   color: #999999;
-  padding: 11px 0;
+  /*padding: 11px 0;*/
   width: 50px;
   height: 50px;
   margin-top: -25px;
   border: 5px solid #efefef;
   border-radius: 50%;
   transition: all ease-in-out 500ms;
+  font-size: 50px;
 }
 .login-form-1 .login-button:hover {
   color: #555555;
@@ -130,10 +131,11 @@ label.form-invalid:after {
 /*=== 3. Text Outside the Box ===*/
 .etc-login-form {
   color: #444444;
-  padding: 10px 20px;
+  padding: 10px 10px;
 }
 .etc-login-form p {
   margin-bottom: 5px;
+  font-weight: bold;
 }
 .etc-login-form p a {
   margin-bottom: 5px;

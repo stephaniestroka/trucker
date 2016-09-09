@@ -14,14 +14,15 @@
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
         <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("css/bootstrap.min.css")">
         <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+        <link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css">
         <script src="@routes.Assets.versioned("js/jquery-3.1.0.min.js")" type="text/javascript"></script>
         <script src="@routes.Assets.versioned("js/bootstrap.min.js")" type="text/javascript"></script>
     </head>
     <body style="background-image: url('@routes.Assets.versioned(background)'); background-size: cover">
     <!-- LOGIN FORM -->
-        <div class="text-center" style="padding:50px 0; width: 400px; background-color: rgba(200, 200, 200, 0.7);">
-            <div class="logo">login</div>
+        <div class="text-center" style="padding:50px 0; width: 400px; background-color: rgba(200, 200, 200, 0.7); margin: 30vh auto;">
+            <div class="logo">Digital ID Login</div>
             <!-- Main Form -->
             <div class="login-form-1">
                 <form id="login-form" class="text-left">
@@ -30,10 +31,13 @@
                         <div class="login-group">
                             <div class="form-group">
                                 <label for="lg_username" class="sr-only">Digital ID</label>
-                                <input type="text" class="form-control" id="lg_username" name="lg_username" placeholder="username">
+                                <input type="text" class="form-control" id="lg_username" name="lg_username" placeholder="johnny@@digitalid.net">
                             </div>
                         </div>
-                        <button type="submit" class="login-button"><i class="fa fa-chevron-right"></i></button>
+                        <button type="submit" class="login-button">
+                            &#187;
+                            <i class="fa fa-chevron-right"></i>
+                        </button>
                     </div>
                     <div class="etc-login-form">
                         <p>Don't have a Digital ID yet? <a href="https://www.digitalid.net">Click here</a></p>
