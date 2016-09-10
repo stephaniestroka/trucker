@@ -21,6 +21,6 @@ public class HomeController extends Controller {
     }
     
     public Result simulation(int id) {
-        return ok(dashboard.render("Truck Simulator.", "images/man_truck2.jpg"));
+        return ok(dashboard.render("Truck Simulator.", "images/man_truck3.jpg"));
     }
 }

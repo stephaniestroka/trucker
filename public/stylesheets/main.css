@@ -149,3 +149,51 @@ label.form-invalid:after {
   color: #444444;
   font-weight: bold;
 }
+
+/*=== 10. Data Packages ===*/
+.data-pkg {
+  background-color: red;
+  width: 40px;
+  height: 40px;
+  margin: 30vh 50vw;
+  position: absolute;
+  z-index: 9999;
+  transition-property: margin;
+  transition-duration: 1s;
+}
+
+.lower-right-corner {
+  margin-top: 70vh;
+  margin-left: 90vw;
+}
+
+.lower-left-corner {
+  margin-top: 70vh;
+  margin-left: 10vw;
+}
+
+.upper-right-corner {
+  margin-top: 0vh;
+  margin-left: 90vw;
+}
+
+.upper-left-corner {
+  margin-top: 0vh;
+  margin-left: 10vw;
+}
+
+.driver {
+  background-color: #04a21e;
+}
+
+.man {
+  background-color: #0078b3;
+}
+
+.public {
+  background-color: #b30043;
+}
+
+.employer {
+  background-color: yellow;
+}
