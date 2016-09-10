@@ -21,12 +21,16 @@
         <script src="@routes.Assets.versioned("js/bootstrap.min.js")" type="text/javascript"></script>
         <script src="@routes.GmapsController.javascriptRoutes" type="text/javascript"></script>
         <script src="@routes.Assets.versioned("javascripts/gmapsCode.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.versioned("javascripts/drive.js")" type="text/javascript"></script>
         <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBoOklxjoiao1YpYuvzJu5EmDvMv3zvxeI&libraries=drawing,places&callback=initialize"  type="text/javascript"></script>
         <!--<script src="https://maps.googleapis.com/maps/api/js?"></script>-->
     </head>
     <body style="background-image: url('@routes.Assets.versioned(background)'); background-size: cover">
     <!-- LOGIN FORM -->
         <div class="text-center" style="">
+            <div id="driveControls">
+                <button id="btn_startDrive">Start</button>
+            </div>
             <div id="map" style="height: 60vh; width: 60vw; position: relative; background-color: rgb(229, 227, 223); overflow: hidden; margin: 20vh auto"></div>
         <!-- end:Main Form -->
         </div>
