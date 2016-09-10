@@ -105,16 +105,12 @@ public class PushController extends Controller {
     
     public Result getResponse(String jobIdString){
         UUID jobId = (UUID.fromString(jobIdString));
+        
         if(!pushService.isJobInQueue(jobId) ||
                 !pushService.hasJobAResponse(jobId)){
             return badRequest();
         }
         PushResponse response = pushService.fetchResponse(jobId);
-        if (response.getAction() instanceof AuthenticationResponseAction) {
-            if (((AuthenticationResponseAction) response.getAction()).isSuccess()) {
-                return redirect(routes.HomeController.simulation(1));
-            }
-        }
         return ok(Json.toJson(response));
     }
     
