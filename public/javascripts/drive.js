@@ -3,15 +3,22 @@ $( document ).ready(function(){
 
     $("#btn_startDrive").click(function(){
         startDrive();
+        updateSpeedometer();
     });
 
     $("#btn_brake").click(function(){
         brake();
+        updateSpeedometer();
     });
 
     $("#btn_accelerate").click(function(){
         accelarate();
+        updateSpeedometer();
     });
+
+    function updateSpeedometer() {
+        $("#speedometer-value").html(velocity + " km/h");
+    }
 });
 
 var driveIntervalId;
@@ -52,4 +59,10 @@ function stopDrive() {
 function refreshInterval() {
     stopDrive();
     startDrive();
+}
+
+function completeTheDrive() {
+    stopDrive();
+    velocity = 0;
+    updateSpeedometer();
 }
