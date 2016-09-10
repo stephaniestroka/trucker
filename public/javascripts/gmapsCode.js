@@ -1,5 +1,3 @@
-var apiKey = 'AIzaSyBoOklxjoiao1YpYuvzJu5EmDvMv3zvxeI';
-
 var map;
 var polylines = [];
 var snappedCoordinates = [];
@@ -32,13 +30,6 @@ function addSingleSnappedCoordinate(location) {
     snappedCoordinates.push(latlng);
 }
 
-function travel() {
-    window.setInterval(function(){
-            requestNextLocation();
-            drawSnappedPolyline();
-    }, 100);
-}
-
 function requestNextLocation() {
     var route = gmapsJsRoutes.controllers.GmapsController.nextLocation();
 
@@ -49,11 +40,15 @@ function requestNextLocation() {
                 setIsCompleted(result);
                 if (!isCompleted) {
                     addSingleSnappedCoordinate(result);
-                    console.log(result.latitude + " " + result.longitude);
                 }
             },
             async: false
         });
+
+        //TODO there must be a better way... for sure :-/
+        if(isCompleted) {
+            stopDrive();
+        }
 }
 
 function setIsCompleted(data) {
