@@ -1,0 +1,59 @@
+@*
+ * This template is called from the `index` template. This template
+ * handles the rendering of the page header and body tags. It takes
+ * two arguments, a `String` for the title of the page and an `Html`
+ * object to insert into the body of the page.
+ *@
+@(title: String)(image: String)(name: String)(description: String)
+
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        @* Here's where we render the page title `String`. *@
+        <title>@title</title>
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("stylesheets/main.css")">
+        <link rel="stylesheet" media="screen" href="@routes.Assets.versioned("css/bootstrap.min.css")">
+        <link rel="shortcut icon" type="image/png" href="@routes.Assets.versioned("images/favicon.png")">
+        <link href='http://fonts.googleapis.com/css?family=Varela+Round' rel='stylesheet' type='text/css'>
+        <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css">
+        <script src="@routes.Assets.versioned("js/jquery-3.1.0.min.js")" type="text/javascript"></script>
+        <!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>-->
+        <script src="@routes.Assets.versioned("js/bootstrap.min.js")" type="text/javascript"></script>
+        <!--<script src="https://maps.googleapis.com/maps/api/js?"></script>-->
+    </head>
+     <!--position: absolute; width: 100%-->
+    <body style="">
+        <img src="@routes.Assets.versioned(image)" style="display: block; margin: 0 auto;" width="700px"/>
+        <div class="data-details" style="margin: 0 auto; max-width: 600px; background-color: #efefef">
+            <table class="table table-condensed">
+                <thead>
+                  <tr>
+                    <th>Type</th>
+                    <th>Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Name</td>
+                        <td>@name</td>
+                    </tr>
+                    <tr>
+                        <td>Description</td>
+                        <td>@description</td>
+                    </tr>
+                  <tr>
+                    <td>Data Size</td>
+                    <td><span id="data-size">582</span> MB</td>
+                  </tr>
+                  <tr>
+                    <td>Data Types</td>
+                    <td>4</td>
+                  </tr>
+              </tbody>
+            </table>
+            <input type="text" placeholder="Type your query." style="width: 100%"/>
+            <div class="code" id="query-result">
+            </div>
+        </div>
+    </body>
+</html>
