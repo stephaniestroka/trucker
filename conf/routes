@@ -20,8 +20,6 @@ GET     /push/response/:jobId        controllers.PushController.getResponse(jobI
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.versioned(path="/public", file: Asset)
 
-
-
 #Google Maps API stuff
 GET     /map/itinerary/new              controllers.GmapsController.newItinerary()
 GET     /map/itinerary/location/next    controllers.GmapsController.nextLocation()
