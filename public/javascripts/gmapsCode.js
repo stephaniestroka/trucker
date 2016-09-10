@@ -1,88 +1,65 @@
-var apiKey = 'AIzaSyBoOklxjoiao1YpYuvzJu5EmDvMv3zvxeI';
-
 var map;
-var drawingManager;
-var placeIdArray = [];
 var polylines = [];
 var snappedCoordinates = [];
+var isCompleted = false;
 
-//    center: {lat: -33.8667, lng: 151.1955}
 function initialize() {
-  var mapOptions = {
-    zoom: 13,
-    center: {lat: 48.267035, lng: 11.662849}
-  };
-  map = new google.maps.Map(document.getElementById('map'), mapOptions);
-
-  // Enables the polyline drawing control. Click on the map to start drawing a
-  // polyline. Each click will add a new vertice. Double-click to stop drawing.
-
-  drawingManager = new google.maps.drawing.DrawingManager({
-    drawingMode: google.maps.drawing.OverlayType.POLYLINE,
-    drawingControl: true,
-    drawingControlOptions: {
-      position: google.maps.ControlPosition.TOP_CENTER,
-      drawingModes: [
-        google.maps.drawing.OverlayType.POLYLINE
-      ]
-    },
-    polylineOptions: {
-      strokeColor: '#696969',
-      strokeWeight: 2
-    }
-  });
-  drawingManager.setMap(map);
-
-
-  // Snap-to-road when the polyline is completed.
-  drawingManager.addListener('polylinecomplete', function(poly) {
-    var path = poly.getPath();
-    polylines.push(poly);
-    placeIdArray = [];
-    runSnapToRoad(path);
-  });
-
-
-  // Clear button. Click to remove all polylines.
-  $('#clear').click(function(ev) {
-    for (var i = 0; i < polylines.length; ++i) {
-      polylines[i].setMap(null);
-    }
-    polylines = [];
-    ev.preventDefault();
-    return false;
-  });
+  showGoogleMaps();
+  initializeItinerary();
 }
 
-// Snap a user-created polyline to roads and draw the snapped path
-function runSnapToRoad(path) {
-  var pathValues = [];
-  for (var i = 0; i < path.getLength(); i++) {
-    pathValues.push(path.getAt(i).toUrlValue());
-  }
-
-  $.get('https://roads.googleapis.com/v1/snapToRoads', {
-    interpolate: true,
-    key: apiKey,
-    path: pathValues.join('|')
-  }, function(data) {
-    processSnapToRoadResponse(data);
-    drawSnappedPolyline();
-  });
+function showGoogleMaps() {
+    var mapOptions = {
+      zoom: 13,
+      center: {lat: 48.267035, lng: 11.662849}
+    };
+    map = new google.maps.Map(document.getElementById('map'), mapOptions);
 }
 
-// Store snapped polyline returned by the snap-to-road service.
-function processSnapToRoadResponse(data) {
-  snappedCoordinates = [];
-  placeIdArray = [];
-  for (var i = 0; i < data.snappedPoints.length; i++) {
+function initializeItinerary() {
+    var route = gmapsJsRoutes.controllers.GmapsController.newItinerary();
+    $.get(route.url, function(data){
+        console.log(data["message"])
+    })
+}
+
+function addSingleSnappedCoordinate(location) {
     var latlng = new google.maps.LatLng(
-        data.snappedPoints[i].location.latitude,
-        data.snappedPoints[i].location.longitude);
+        location.latitude,
+        location.longitude);
     snappedCoordinates.push(latlng);
-    placeIdArray.push(data.snappedPoints[i].placeId);
-  }
 }
+
+function requestNextLocation() {
+    var route = gmapsJsRoutes.controllers.GmapsController.nextLocation();
+
+        // make async call
+        $.ajax({
+            url: route.url,
+            success: function (result) {
+                setIsCompleted(result);
+                if (!isCompleted) {
+                    addSingleSnappedCoordinate(result);
+                }
+            },
+            async: false
+        });
+
+        //TODO there must be a better way... for sure :-/
+        if(isCompleted) {
+            stopDrive();
+        }
+}
+
+function setIsCompleted(data) {
+    if(typeof data.code != 'undefined') {
+        isCompleted = true;
+        console.log("Travel is completed");
+    } else {
+        isCompleted = false;
+    }
+}
+
 
 // Draws the snapped polyline (after processing snap-to-road response).
 function drawSnappedPolyline() {

@@ -36,10 +36,14 @@ public class GmapsController extends Controller{
 
     public Result newItinerary() {
         ArrayList<Location> locations = new ArrayList<>();
-        locations.add(new Location(-35.27801,149.12958));
-        locations.add(new Location(-35.28032,149.12907));
-        locations.add(new Location(-35.28099,149.12929));
-        locations.add(new Location(-35.28144,149.12984));
+        locations.add(new Location(48.262551, 11.658352));
+        locations.add(new Location(48.261859, 11.662859));
+        locations.add(new Location(48.261295, 11.669886));
+        locations.add(new Location(48.266204, 11.671545));
+        locations.add(new Location(48.266997, 11.669898));
+        locations.add(new Location(48.267408, 11.666502));
+        locations.add(new Location(48.267451, 11.662232));
+        locations.add(new Location(48.263819, 11.658699));
 
         gmapService.makeNewItinerary(locations);
 
