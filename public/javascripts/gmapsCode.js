@@ -6,10 +6,11 @@ var placeIdArray = [];
 var polylines = [];
 var snappedCoordinates = [];
 
+//    center: {lat: -33.8667, lng: 151.1955}
 function initialize() {
   var mapOptions = {
-    zoom: 17,
-    center: {lat: -33.8667, lng: 151.1955}
+    zoom: 13,
+    center: {lat: 48.267035, lng: 11.662849}
   };
   map = new google.maps.Map(document.getElementById('map'), mapOptions);
 

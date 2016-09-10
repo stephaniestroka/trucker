@@ -9,5 +9,8 @@ scalaVersion := "2.11.7"
 libraryDependencies ++= Seq(
   javaJdbc,
   cache,
-  javaWs
+  javaWs,
+  javaJpa,
+  "org.hibernate"          % "hibernate-core"       % "5.2.0.Final",
+  "com.h2database"         % "h2"                   % "1.4.192"
 )

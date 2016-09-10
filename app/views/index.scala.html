@@ -18,6 +18,9 @@
         <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/3.2.1/css/font-awesome.min.css">
         <script src="@routes.Assets.versioned("js/jquery-3.1.0.min.js")" type="text/javascript"></script>
         <script src="@routes.Assets.versioned("js/bootstrap.min.js")" type="text/javascript"></script>
+        <script src="@routes.Assets.versioned("javascripts/login.js")" type="text/javascript"></script>
+        <!-- TODO: there is an error in the following code -->
+        <!--<script src="@routes.Assets.versioned("javascripts/gmapsCode.js")" type="text/javascript"></script>-->
     </head>
     <body style="background-image: url('@routes.Assets.versioned(background)'); background-size: cover">
     <!-- LOGIN FORM -->
@@ -25,7 +28,7 @@
             <div class="logo">Digital ID Login</div>
             <!-- Main Form -->
             <div class="login-form-1">
-                <form id="login-form" class="text-left">
+                <form id="login-form" class="text-left" action="javascript:">
                     <div class="login-form-main-message"></div>
                     <div class="main-login-form">
                         <div class="login-group">
@@ -34,7 +37,7 @@
                                 <input type="text" class="form-control" id="lg_username" name="lg_username" placeholder="johnny@@digitalid.net">
                             </div>
                         </div>
-                        <button type="submit" class="login-button">
+                        <button class="login-button" id="login">
                             &#187;
                             <i class="fa fa-chevron-right"></i>
                         </button>
