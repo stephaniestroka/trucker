@@ -12,7 +12,7 @@ $(document).ready(function () {
                 setInterval(function() {
                     $.get("/push/response/" + msg.idRequest, function(data) {
                         if (typeof data.action != "undefined") {
-                            if (data.action.type == "AuthenticationResponseAction" && data.action.success = true) {
+                            if (data.action.type == "AuthenticationResponseAction" && data.action.success == true) {
                                 window.location.replace("/truck/1/simulation");
                             }
                         }
