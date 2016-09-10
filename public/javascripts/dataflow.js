@@ -1,18 +1,36 @@
+var DataFlow = {};
 $(document).ready(function() {
 
-    i = 0;
-    
-    // TODO: push types
-    types = ["driver", "driver", "man", "public", "employer", "public", "man", "man", "driver", "driver", "man", "public", "employer", "public", "man", "man", "driver", "driver", "man", "public", "employer", "public", "man", "man", "driver", "driver", "man", "public", "employer", "public", "man", "man"];
-    handle = window.setInterval(function() {
-        if (types.length != 0) {
-            addDataPkg(i, types.shift());
-            i = i + 1;
+    /************************** VARIABLES ****************************/
+    var packagesIntervalId;
+    var isStarted = false;
+
+
+    /************************** FUNCTIONS ****************************/
+
+    DataFlow.startDataFlow = function () {
+        // TODO: push types
+        var i = 0;
+        var types = ["driver", "driver", "man", "public", "employer", "public", "man", "man", "driver", "driver", "man", "public", "employer", "public", "man", "man", "driver", "driver", "man", "public", "employer", "public", "man", "man", "driver", "driver", "man", "public", "employer", "public", "man", "man"];
+        if (!isStarted) {
+            packagesIntervalId = window.setInterval(function() {
+                       if (types.length != 0) {
+                           DataFlow.addDataPkg(i, types.shift());
+                           i = i + 1;
+                       }
+
+                   }, 1000);
         }
-        
-    }, 2000);
+        isStarted = true;
+
+    }
+
+     DataFlow.stopDataFlow = function() {
+        clearInterval(packagesIntervalId);
+        isStarted = false;
+    }
     
-    function addDataPkg(number, type) {
+    DataFlow.addDataPkg = function(number, type) {
         datapkg = document.createElement('div');
         cssClass = "";
         if (type == "driver") {
