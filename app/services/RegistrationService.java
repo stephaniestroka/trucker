@@ -34,7 +34,7 @@ public class RegistrationService {
         }
     }
 
-    public User findUser(@Nonnull String identifier){
+    public User findUser(@Nonnull String identifier) {
         return jpaApi.em().find(User.class, identifier);
     }
 

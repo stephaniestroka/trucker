@@ -14,3 +14,7 @@ libraryDependencies ++= Seq(
   "org.hibernate"          % "hibernate-core"       % "5.2.0.Final",
   "com.h2database"         % "h2"                   % "1.4.192"
 )
+
+// Running Play in development mode while using JPA will work fine, but in order to deploy the application you will need to add this to your build.sbt file.
+PlayKeys.externalizeResources := false
+
