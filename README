@@ -20,11 +20,11 @@ Content-Type: application/json
 
 2. Send a request to the path:
 
-GET /push/johnny@digitalid.net/login
+PUT /push/send/login/johnny@digitalid.net
 Host: localhost
 
-GET /push/johnny@digitalid.net/speeding
+PUT /push/send/speeding/johnny@digitalid.net
 Host: localhost
 
-GET /push/johnny@digitalid.net/takebreak
+PUT /push/send/takebreak/johnny@digitalid.net
 Host: localhost

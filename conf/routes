@@ -5,6 +5,8 @@
 # An example controller showing a sample home page
 GET     /                            controllers.HomeController.index
 
+GET     /truck/:id/simulation        controllers.HomeController.simulation(id : Integer)
+
 POST    /register                    controllers.RegistrationController.register
 
 POST    /push/:uuid                  controllers.PushController.respondToRequest(uuid : String)
