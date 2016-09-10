@@ -96,11 +96,13 @@ public class PushService {
         logger.debug("converting a PushRequest in Firebase's Message...");
         Message message = new Message();
         String token = registrationService.findTokenForUserId(pushRequest.getUserId());
+//        String token = "cS-OmnwZu-w:APA91bGQvTd1yt9E2qd8tHJFd2wdONzN_t1GaHMQ86Ch2mS3vsJ7wzo30zUpxG13y9F1D-LqQNbUTe5hVnCbC94NCCFgtZz9WRFlidNcR630KWUhbUYl1X2ihTP5IIefEN9fEOSgNsgZ";
         if (token == null) {
             // TODO: do something to prevent calling that with null.
             throw new RuntimeException("Failed to find token for user '" + pushRequest.getUserId() + "'");
         }
         message.setTo(token);
+        Logger.info("Pushing: " + Json.toJson(pushRequest).toString());
         message.addData(PushRequest.class.getSimpleName(), Json.toJson(pushRequest).toString());
         return message;
     }
