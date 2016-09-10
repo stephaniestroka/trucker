@@ -33,13 +33,17 @@
         <a href="/data/employer"><img src="@routes.Assets.versioned("images/cloud_3.png")" style="position: absolute; bottom: 0; left: 0;" width="300px"/></a>
         <a href="/data/driver"><img src="@routes.Assets.versioned("images/cloud_4.png")" style="position: absolute; bottom: 0; right: 0;" width="300px"/></a>
         <div class="text-center" style="">
-            <div id="driveControls">
-                <button id="btn_startDrive">Start</button>
-                <button id="btn_accelerate">Accelerate</button>
-                <button id="btn_brake">Brake</button>
+            <div id="driveControls" style="width : 30%; margin : 10px auto;">
+                <button type="button" id="btn_startDrive" class="btn btn-default">Start</button>
+                <button type="button" id="btn_accelerate" class="btn btn-default">Accelerate</button>
+                <button type="button" id="btn_brake" class="btn btn-default">Brake</button>
+                <div id="speedometer" class="jumbotron" style="padding-top: 20px; padding-bottom: 20px; margin-top : 5px" >
+                    <h2 id="speedometer-value">0 km/h</h2>
+                </div>
             </div>
             <div id="data-flow"></div>
             <div id="map" style="height: 60vh; width: 60vw; position: relative; background-color: rgb(229, 227, 223); overflow: hidden; margin: 20vh auto"></div>
+
         </div>
     </body>
 </html>

@@ -47,7 +47,7 @@ function requestNextLocation() {
 
         //TODO there must be a better way... for sure :-/
         if(isCompleted) {
-            stopDrive();
+            completeTheDrive();
         }
 }
 
