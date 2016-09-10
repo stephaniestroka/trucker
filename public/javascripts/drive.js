@@ -4,15 +4,31 @@ $(document).ready(function() {
     /************************** VARIABLES ****************************/
     var START_VELOCITY = 10;
     var driveIntervalId;
+    var getDataIntervalId;
     var velocity = START_VELOCITY;
 
     /************************** CLICK ACTIONS ****************************/
 
     $("#btn_startDrive").click(function(){
-        Drive.startDrive();
-        Drive.updateSpeedometer();
+        value = $("#btn_startDrive").text();
+        if (value == "Start") {
+            Drive.startDrive();
+            Drive.updateSpeedometer();
+            $("#btn_brake").removeClass("disabled");
+            $("#btn_accelerate").removeClass("disabled");
+            $("#btn_sleep").removeClass("disabled");
+            $("#btn_startDrive").html("Stop");
+        } else {
+            Drive.stopDrive();
+            $("#btn_startDrive").html("Start");
+            $("#btn_brake").addClass("disabled");
+            $("#btn_accelerate").addClass("disabled");
+            $("#btn_sleep").addClass("disabled");
+            velocity = 0;
+            Drive.updateSpeedometer();
+        }
     });
-
+    
     $("#btn_brake").click(function(){
         Drive.brake();
         Drive.updateSpeedometer();
@@ -27,13 +43,24 @@ $(document).ready(function() {
 
     Drive.updateSpeedometer = function() {
         $("#speedometer-value").html(velocity + " km/h");
+        $.ajax({
+            method: "PUT",
+            url: "/push/send/speed/johnny@digitalid.net",
+            data: { }
+        })
+        .done(function( msg ) {
+            console.log("Updating driver of the speed.")
+        });
     }
 
     Drive.startDrive = function() {
+    
+        getDataIntervalId = setInterval(function(){
+                Gmaps.requestNext100Locations();
+        }, 3000);
         driveIntervalId = setInterval(function(){
-                Gmaps.requestNextLocation();
                 Gmaps.drawSnappedPolyline();
-        }, 1000/velocity);
+        }, 5000/velocity);
 
         DataFlow.startDataFlow();
     }
@@ -60,6 +87,7 @@ $(document).ready(function() {
 
      Drive.stopDrive = function() {
         clearInterval(driveIntervalId);
+        clearInterval(getDataIntervalId);
     }
 
     Drive.refreshInterval = function() {

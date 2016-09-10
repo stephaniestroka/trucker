@@ -35,9 +35,9 @@ public class PushController extends Controller {
         final RequestAction requestAction;
         if (method.equals("login")) {
             requestAction = new AuthenticationRequestAction();
-        } else if (method.equals("speeding")) {
+        } else if (method.equals("speed")) {
             requestAction = new SpeedingWarningRequestAction();
-        } else if (method.equals("takebreak")) {
+        } else if (method.equals("sleep")) {
             requestAction = new TakeBreakRequestAction();
         } else {
             // TODO: we should return a bad request now, but how do we do that if we're returning a completion stage?

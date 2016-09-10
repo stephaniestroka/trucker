@@ -7,7 +7,8 @@ $(document).ready(function () {
             data: { }
         })
         .done(function( msg ) {
-            window.location.replace("/truck/1/simulation");
+            console.log("Sending login request successful")
+//            window.location.replace("/truck/1/simulation");
         });
     });
 });

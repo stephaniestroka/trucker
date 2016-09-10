@@ -14,10 +14,10 @@ $( document ).ready(function(){
                 location.latitude,
                 location.longitude);
             snappedCoordinates.push(latlng);
-        }
+        };
 
-        Gmaps.requestNextLocation = function() {
-            var route = gmapsJsRoutes.controllers.GmapsController.nextLocation();
+        Gmaps.requestNext100Locations = function() {
+            var route = gmapsJsRoutes.controllers.GmapsController.nextLocations();
 
                 // make async call
                 $.ajax({
@@ -25,7 +25,11 @@ $( document ).ready(function(){
                     success: function (result) {
                         Gmaps.setIsCompleted(result);
                         if (!isCompleted) {
-                            Gmaps.addSingleSnappedCoordinate(result);
+                            if (typeof result.code == 'undefined') {
+                                for (i = 0; i < result.length; i++) {
+                                    Gmaps.addSingleSnappedCoordinate(result[i]);
+                                }
+                            }
                         }
                     },
                     async: false
@@ -38,7 +42,7 @@ $( document ).ready(function(){
         }
 
         Gmaps.setIsCompleted = function(data) {
-            if(typeof data.code != 'undefined') {
+            if(typeof data.code != 'undefined' && snappedCoordinates.length == 0) {
                 isCompleted = true;
                 console.log("Travel is completed");
             } else {
@@ -48,14 +52,23 @@ $( document ).ready(function(){
 
         // Draws the snapped polyline (after processing snap-to-road response).
         Gmaps.drawSnappedPolyline = function() {
-          var snappedPolyline = new google.maps.Polyline({
-            path: snappedCoordinates,
-            strokeColor: 'black',
-            strokeWeight: 3
-          });
+            
+            if (snappedCoordinates.length > 0) {
+                var partialCoordinates = [];
+                for (i = 0; i < 10; i++) {
+                    if (snappedCoordinates.length > 0) {
+                        partialCoordinates.push(snappedCoordinates.shift());
+                    }
+                }
+                var snappedPolyline = new google.maps.Polyline({
+                    path: partialCoordinates,
+                    strokeColor: 'black',
+                    strokeWeight: 3
+                });
 
-          snappedPolyline.setMap(Gmaps.map);
-          polylines.push(snappedPolyline);
+                snappedPolyline.setMap(Gmaps.map);
+                polylines.push(snappedPolyline);
+            }
         }
 });
 

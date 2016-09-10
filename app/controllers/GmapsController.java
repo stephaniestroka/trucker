@@ -31,7 +31,7 @@ public class GmapsController extends Controller{
         return ok(
                 JavaScriptReverseRouter.create("gmapsJsRoutes",
                         (routes.javascript.GmapsController.newItinerary()),
-                        (routes.javascript.GmapsController.nextLocation())
+                        (routes.javascript.GmapsController.nextLocations())
                 )
         ).as("text/javascript");
     }
@@ -42,15 +42,15 @@ public class GmapsController extends Controller{
         return ok(Json.newObject().put("code", 200).put("message", "A new Itinerary has been made"));
     }
 
-    public Result nextLocation() {
+    public Result nextLocations() {
         if(!gmapService.hasItinerary()) {
             return ok(Json.newObject().put("code", 400).put("message", "There's no itinerary"));
         } else if (gmapService.getItinerary().isCompleted()) {
             return ok(Json.newObject().put("code", 200).put("message", "Itinerary is completed"));
         }
 
-        Location location = gmapService.getItinerary().nextLocation();
-        return  ok(Json.toJson(location));
+        Location[] locations = gmapService.getItinerary().next100Locations();
+        return  ok(Json.toJson(locations));
     }
 
     private List<Location> getDemoLocations() {
