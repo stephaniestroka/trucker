@@ -20,6 +20,7 @@ import services.firebase.push.request.action.RequestAction;
 import services.firebase.push.request.action.SpeedingWarningRequestAction;
 import services.firebase.push.request.action.TakeBreakRequestAction;
 import services.firebase.push.response.PushResponse;
+import services.firebase.push.response.action.AuthenticationResponseAction;
 
 /**
  *
@@ -88,9 +89,17 @@ public class PushController extends Controller {
         PushResponse response = Json.fromJson(jsonResponse, PushResponse.class);
 
         pushService.respondToRequest(jobId, response);
-
+    
         ObjectNode responseBody = Json.newObject();
-        responseBody.put("message", "RESPONDED");
+        if (response.getAction() instanceof AuthenticationResponseAction) {
+            if (((AuthenticationResponseAction) response.getAction()).isSuccess()) {
+                responseBody.put("message", "login successful");
+            } else {
+                responseBody.put("message", "login failed");
+            }
+        } else {
+            responseBody.put("message", "RESPONDED");
+        }
         return ok(responseBody);
     }
     
@@ -101,6 +110,11 @@ public class PushController extends Controller {
             return badRequest();
         }
         PushResponse response = pushService.fetchResponse(jobId);
+        if (response.getAction() instanceof AuthenticationResponseAction) {
+            if (((AuthenticationResponseAction) response.getAction()).isSuccess()) {
+                return redirect(routes.HomeController.simulation(1));
+            }
+        }
         return ok(Json.toJson(response));
     }
     

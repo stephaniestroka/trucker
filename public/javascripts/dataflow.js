@@ -48,10 +48,10 @@ $(document).ready(function() {
             console.log("Sending data pkg " + number + " to the " + cssClass + " (" + $(datapkg).attr("id") + ")");
             $(datapkg).addClass(cssClass);
             // TODO: Because I'm a JS noob, the following code is commented out.
-//            window.setTimeout(function() {
-//                console.log("Removing data pkg " + number);
-//                $(datapkg).remove();
-//            }, 3000);
+            window.setTimeout(function() {
+                console.log("Removing data pkg " + number);
+                $(datapkg).remove();
+            }, 3000);
         }, 1000);
         
     }

@@ -7,8 +7,14 @@ $(document).ready(function () {
             data: { }
         })
         .done(function( msg ) {
-            console.log("Sending login request successful")
-//            window.location.replace("/truck/1/simulation");
+            if (typeof msg.idRequest != 'undefined') {
+                console.log("Sending login request successful. Received request id " + msg.idRequest);
+                setInterval(function() {
+                    $.get("/push/response/" + msg.idRequest, function(data) {
+                        
+                    });
+                }, 1000);
+            }
         });
     });
 });

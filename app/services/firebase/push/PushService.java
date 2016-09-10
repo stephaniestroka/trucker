@@ -98,7 +98,7 @@ public class PushService {
         String token = registrationService.findTokenForUserId(pushRequest.getUserId());
         if (token == null) {
             // TODO: do something to prevent calling that with null.
-            token = "1234";
+            throw new RuntimeException("Failed to find token for user '" + pushRequest.getUserId() + "'");
         }
         message.setTo(token);
         message.addData(PushRequest.class.getSimpleName(), Json.toJson(pushRequest).toString());
