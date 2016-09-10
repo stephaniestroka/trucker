@@ -1,41 +1,47 @@
+var Drive = {};
+$(document).ready(function() {
 
-$( document ).ready(function(){
+    /************************** VARIABLES ****************************/
+    var START_VELOCITY = 10;
+    var driveIntervalId;
+    var getDataIntervalId;
+    var velocity = START_VELOCITY;
+
+    /************************** CLICK ACTIONS ****************************/
 
     $("#btn_startDrive").click(function(){
         value = $("#btn_startDrive").text();
         if (value == "Start") {
-            startDrive();
-            updateSpeedometer();
+            Drive.startDrive();
+            Drive.updateSpeedometer();
             $("#btn_brake").removeClass("disabled");
             $("#btn_accelerate").removeClass("disabled");
             $("#btn_sleep").removeClass("disabled");
             $("#btn_startDrive").html("Stop");
         } else {
-            stopDrive();
+            Drive.stopDrive();
             $("#btn_startDrive").html("Start");
             $("#btn_brake").addClass("disabled");
             $("#btn_accelerate").addClass("disabled");
             $("#btn_sleep").addClass("disabled");
             velocity = 0;
-            updateSpeedometer();
+            Drive.updateSpeedometer();
         }
-    });
-
-    $("#btn_sleep").click(function() {
-        $.get("/push/send/sleep/johnny@digitalid.net", function(data) { console.log("Send sleep notification") });
     });
     
     $("#btn_brake").click(function(){
-        brake();
-        updateSpeedometer();
+        Drive.brake();
+        Drive.updateSpeedometer();
     });
 
     $("#btn_accelerate").click(function(){
-        accelarate();
-        updateSpeedometer();
+        Drive.accelarate();
+        Drive.updateSpeedometer();
     });
 
-    function updateSpeedometer() {
+    /************************** FUNCTIONS ****************************/
+
+    Drive.updateSpeedometer = function() {
         $("#speedometer-value").html(velocity + " km/h");
         $.ajax({
             method: "PUT",
@@ -46,50 +52,57 @@ $( document ).ready(function(){
             console.log("Updating driver of the speed.")
         });
     }
+
+    Drive.startDrive = function() {
+    
+        getDataIntervalId = setInterval(function(){
+                Gmaps.requestNext100Locations();
+        }, 3000);
+        driveIntervalId = setInterval(function(){
+                Gmaps.drawSnappedPolyline();
+        }, 5000/velocity);
+
+        DataFlow.startDataFlow();
+    }
+
+    Drive.accelarate = function() {
+        velocity = velocity + 5;
+        Drive.refreshInterval();
+        console.log("Acceletate to velocity: " + velocity);
+    }
+
+    Drive.brake = function() {
+        if(velocity != 0) {
+            velocity = velocity - 5;
+        }
+
+        if(velocity == 0) {
+            Drive.stopDrive();
+            console.log("Stopped");
+        } else {
+            Drive.refreshInterval();
+            console.log("Decelerate to velocity: " + velocity);
+        }
+    }
+
+     Drive.stopDrive = function() {
+        clearInterval(driveIntervalId);
+        clearInterval(getDataIntervalId);
+    }
+
+    Drive.refreshInterval = function() {
+        Drive.stopDrive();
+        Drive.startDrive();
+    }
+
+    Drive.completeTheDrive = function() {
+        Drive.stopDrive();
+        DataFlow.stopDataFlow();
+        velocity = 0;
+        Drive.updateSpeedometer();
+    }
 });
 
-var driveIntervalId;
-var START_VELOCITY = 10;
-var velocity = START_VELOCITY;
 
-function startDrive() {
-    driveIntervalId = setInterval(function(){
-            requestNext100Locations();
-            drawSnappedPolyline();
-    }, 1000/velocity);
-}
 
-function accelarate() {
-    velocity = velocity + 5;
-    refreshInterval();
-    console.log("Acceletate to velocity: " + velocity);
-}
 
-function brake() {
-    if(velocity != 0) {
-        velocity = velocity - 5;
-    }
-
-    if(velocity == 0) {
-        stopDrive();
-        console.log("Stopped");
-    } else {
-        refreshInterval();
-        console.log("Decelerate to velocity: " + velocity);
-    }
-}
-
-function stopDrive() {
-    clearInterval(driveIntervalId);
-}
-
-function refreshInterval() {
-    stopDrive();
-    startDrive();
-}
-
-function completeTheDrive() {
-    stopDrive();
-    velocity = 0;
-    updateSpeedometer();
-}

@@ -1,78 +1,98 @@
-var map;
-var polylines = [];
-var snappedCoordinates = [];
-var isCompleted = false;
+var Gmaps = {};
 
-function initialize() {
-  showGoogleMaps();
-  initializeItinerary();
-}
+$( document ).ready(function(){
 
-function showGoogleMaps() {
-    var mapOptions = {
-      zoom: 13,
-      center: {lat: 48.267035, lng: 11.662849}
-    };
-    map = new google.maps.Map(document.getElementById('map'), mapOptions);
-}
+     /************************** VARIABLES ****************************/
+    var polylines = [];
+    var snappedCoordinates = [];
+    var isCompleted = false;
 
-function initializeItinerary() {
-    var route = gmapsJsRoutes.controllers.GmapsController.newItinerary();
-    $.get(route.url, function(data){
-        console.log(data["message"])
-    })
-}
+    /************************** FUNCTIONS ****************************/
 
-function addSingleSnappedCoordinate(location) {
-    var latlng = new google.maps.LatLng(
-        location.latitude,
-        location.longitude);
-    snappedCoordinates.push(latlng);
-}
+        Gmaps.addSingleSnappedCoordinate = function(location) {
+            var latlng = new google.maps.LatLng(
+                location.latitude,
+                location.longitude);
+            snappedCoordinates.push(latlng);
+        };
 
-function requestNext100Locations() {
-    var route = gmapsJsRoutes.controllers.GmapsController.nextLocations();
+        Gmaps.requestNext100Locations = function() {
+            var route = gmapsJsRoutes.controllers.GmapsController.nextLocations();
 
-        // make async call
-        $.ajax({
-            url: route.url,
-            success: function (result) {
-                setIsCompleted(result);
-                if (!isCompleted) {
-                    for (i = 0; i < result.length; i++) {
-                        addSingleSnappedCoordinate(result[i]);
+                // make async call
+                $.ajax({
+                    url: route.url,
+                    success: function (result) {
+                        Gmaps.setIsCompleted(result);
+                        if (!isCompleted) {
+                            if (typeof result.code == 'undefined') {
+                                for (i = 0; i < result.length; i++) {
+                                    Gmaps.addSingleSnappedCoordinate(result[i]);
+                                }
+                            }
+                        }
+                    },
+                    async: false
+                });
+
+                //TODO there must be a better way... for sure :-/
+                if(isCompleted) {
+                    Drive.completeTheDrive();
+                }
+        }
+
+        Gmaps.setIsCompleted = function(data) {
+            if(typeof data.code != 'undefined' && snappedCoordinates.length == 0) {
+                isCompleted = true;
+                console.log("Travel is completed");
+            } else {
+                isCompleted = false;
+            }
+        }
+
+        // Draws the snapped polyline (after processing snap-to-road response).
+        Gmaps.drawSnappedPolyline = function() {
+            
+            if (snappedCoordinates.length > 0) {
+                var partialCoordinates = [];
+                for (i = 0; i < 10; i++) {
+                    if (snappedCoordinates.length > 0) {
+                        partialCoordinates.push(snappedCoordinates.shift());
                     }
                 }
-            },
-            async: false
-        });
+                var snappedPolyline = new google.maps.Polyline({
+                    path: partialCoordinates,
+                    strokeColor: 'black',
+                    strokeWeight: 3
+                });
 
-        //TODO there must be a better way... for sure :-/
-        if(isCompleted) {
-            completeTheDrive();
+                snappedPolyline.setMap(Gmaps.map);
+                polylines.push(snappedPolyline);
+            }
         }
-}
+});
 
-function setIsCompleted(data) {
-    if(typeof data.code != 'undefined') {
-        isCompleted = true;
-        console.log("Travel is completed");
-    } else {
-        isCompleted = false;
+    /************************** INIT STUFF ****************************/
+    // functions that can run during page loading
+
+    function initialize() {
+      showGoogleMaps();
+      initializeItinerary();
     }
-}
 
+    function showGoogleMaps() {
+        var mapOptions = {
+          zoom: 13,
+          center: {lat: 48.267035, lng: 11.662849}
+        };
+        Gmaps.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    }
 
-// Draws the snapped polyline (after processing snap-to-road response).
-function drawSnappedPolyline() {
-  var snappedPolyline = new google.maps.Polyline({
-    path: snappedCoordinates,
-    strokeColor: 'black',
-    strokeWeight: 3
-  });
-
-  snappedPolyline.setMap(map);
-  polylines.push(snappedPolyline);
-}
+    function initializeItinerary() {
+        var route = gmapsJsRoutes.controllers.GmapsController.newItinerary();
+        $.get(route.url, function(data){
+            console.log(data["message"])
+        })
+    }
 
 $(window).load(initialize);
