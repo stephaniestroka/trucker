@@ -29,7 +29,7 @@ $(document).ready(function() {
         clearInterval(packagesIntervalId);
         isStarted = false;
     }
-    
+
     DataFlow.addDataPkg = function(number, type) {
         var datapkg = document.createElement('div');
         var cssClass = "";
@@ -53,7 +53,7 @@ $(document).ready(function() {
                 $(datapkg).remove();
             }, 3000);
         }, 1000);
-        
+
     }
-    
+
 });
