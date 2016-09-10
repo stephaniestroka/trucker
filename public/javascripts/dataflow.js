@@ -4,13 +4,15 @@ $(document).ready(function() {
     
     // TODO: push types
     types = ["driver", "driver", "man", "public", "employer", "public", "man", "man", "driver", "driver", "man", "public", "employer", "public", "man", "man", "driver", "driver", "man", "public", "employer", "public", "man", "man", "driver", "driver", "man", "public", "employer", "public", "man", "man"];
-    handle = window.setInterval(function() {
-        if (types.length != 0) {
-            addDataPkg(i, types.shift());
-            i = i + 1;
-        }
-        
-    }, 2000);
+    function startSimulation() {
+        handle = window.setInterval(function() {
+            if (types.length != 0) {
+                addDataPkg(i, types.shift());
+                i = i + 1;
+            }
+            
+        }, 2000);
+    }
     
     function addDataPkg(number, type) {
         datapkg = document.createElement('div');

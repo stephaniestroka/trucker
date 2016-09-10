@@ -10,10 +10,14 @@ public class Itinerary {
         this.locations = locations;
     }
 
-    public Location nextLocation(){
-        Location currentLocation = locations[currentPosition];
-        currentPosition++;
-        return currentLocation;
+    public Location[] next100Locations() {
+        int max = Math.min(locations.length - currentPosition, 100);
+        Location[] next100Locations = new Location[max];
+        for (int i = 0; i < max; i++) {
+            next100Locations[i] = locations[currentPosition];
+            currentPosition++;
+        }
+        return next100Locations;
     }
 
     public boolean isCompleted() {

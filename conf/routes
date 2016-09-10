@@ -23,5 +23,5 @@ GET     /assets/*file               controllers.Assets.versioned(path="/public",
 
 #Google Maps API stuff
 GET     /map/itinerary/new              controllers.GmapsController.newItinerary()
-GET     /map/itinerary/location/next    controllers.GmapsController.nextLocation()
+GET     /map/itinerary/location/next    controllers.GmapsController.nextLocations()
 GET     /map/jsroutes                   controllers.GmapsController.javascriptRoutes()

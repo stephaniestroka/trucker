@@ -30,8 +30,8 @@ function addSingleSnappedCoordinate(location) {
     snappedCoordinates.push(latlng);
 }
 
-function requestNextLocation() {
-    var route = gmapsJsRoutes.controllers.GmapsController.nextLocation();
+function requestNext100Locations() {
+    var route = gmapsJsRoutes.controllers.GmapsController.nextLocations();
 
         // make async call
         $.ajax({
@@ -39,7 +39,9 @@ function requestNextLocation() {
             success: function (result) {
                 setIsCompleted(result);
                 if (!isCompleted) {
-                    addSingleSnappedCoordinate(result);
+                    for (i = 0; i < result.length; i++) {
+                        addSingleSnappedCoordinate(result[i]);
+                    }
                 }
             },
             async: false
