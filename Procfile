@@ -1,1 +1,1 @@
-activator run --http.port=$PORT $PLAY_OPTS
+target/universal/stage/bin/truck-simulator -Dhttp.port=${PORT}
