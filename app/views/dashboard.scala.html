@@ -27,11 +27,11 @@
         <!--<script src="https://maps.googleapis.com/maps/api/js?"></script>-->
     </head>
      <!--position: absolute; width: 100%-->
-    <body style="background-image: url('@routes.Assets.versioned(background)'); background-size: cover; position: absolute; width: 100%">
-        <a href="/data/public"><img src="@routes.Assets.versioned("images/cloud_1_labeled.png")" style="position: absolute; top: 0; left: 0;" width="300px"/></a>
-        <a href="/data/man"><img src="@routes.Assets.versioned("images/cloud_2_labeled.png")" style="position: absolute; top: 0; right: 0;" width="300px"/></a>
-        <a href="/data/employer"><img src="@routes.Assets.versioned("images/cloud_3_labeled.png")" style="position: absolute; bottom: 0; left: 0;" width="300px"/></a>
-        <a href="/data/driver"><img src="@routes.Assets.versioned("images/cloud_4_labeled.png")" style="position: absolute; bottom: 0; right: 0;" width="300px"/></a>
+    <body style="background-image: url('@routes.Assets.versioned(background)'); background-size: cover; position: absolute; width: 100%; height: 100%">
+        <a href="/data/public"><img src="@routes.Assets.versioned("images/cloud_1_labeled.png")" style="position: absolute; top: 0; left: 0; margin-top: 30px;" width="300px"/></a>
+        <a href="/data/man"><img src="@routes.Assets.versioned("images/cloud_2_labeled.png")" style="position: absolute; top: 0; right: 0; margin-top:30px;" width="300px"/></a>
+        <a href="/data/employer"><img src="@routes.Assets.versioned("images/cloud_3_labeled.png")" style="position: absolute; bottom: 0; left: 0; margin-bottom: -30px;" width="300px"/></a>
+        <a href="/data/driver"><img src="@routes.Assets.versioned("images/cloud_4_labeled.png")" style="position: absolute; bottom: 0; right: 0; margin-bottom: -30px;" width="300px"/></a>
         <div class="text-center" style="">
             <div id="driveControls" style="width : 30%; margin : 10px auto;">
                 <button type="button" id="btn_startDrive" class="btn btn-default">Start</button>
@@ -42,7 +42,7 @@
                 </div>
             </div>
             <div id="data-flow"></div>
-            <div id="map" style="height: 60vh; width: 60vw; position: relative; background-color: rgb(229, 227, 223); overflow: hidden; margin: 20vh auto"></div>
+            <div id="map" style="height: 60vh; width: 60vw; position: relative; background-color: rgb(229, 227, 223); overflow: hidden; margin: 0 auto"></div>
 
         </div>
     </body>
