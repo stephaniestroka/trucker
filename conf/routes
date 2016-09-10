@@ -2,11 +2,12 @@
 # This file defines all application routes (Higher priority routes first)
 # ~~~~
 
-# An example controller showing a sample home page
+# Pages
 GET     /                            controllers.HomeController.index
-
 GET     /truck/:id/simulation        controllers.HomeController.simulation(id : Integer)
+GET     /data/:type                  controllers.HomeController.showDataDetails(type)
 
+# REST API for push notifications
 POST    /register                    controllers.RegistrationController.register
 
 POST    /push/:uuid                  controllers.PushController.respondToRequest(uuid : String)

@@ -23,4 +23,31 @@ public class HomeController extends Controller {
     public Result simulation(int id) {
         return ok(dashboard.render("Truck Simulator.", "images/man_truck3.jpg"));
     }
+    
+    public Result showDataDetails(String type) {
+        final String image;
+        final String title;
+        final String description;
+        if (type.equals("public")) {
+            image = "images/cloud_1_labeled_partners.png";
+            title = "Traffic Data";
+            description = "Data provided by MAN to improve road and traffic conditions.";
+        } else if (type.equals("man")) {
+            image = "images/cloud_2_labeled_partners.png";
+            title = "MAN Data Provider";
+            description = "The new business of MAN: Data Provisioning.";
+        } else if (type.equals("driver")) {
+            image = "images/cloud_4_labeled_partners.png";
+            title = "Personal Driver Profile";
+            description = "The personal data of the driver.";
+        } else if (type.equals("employer")) {
+            image = "images/cloud_3_labeled.png";
+            title = "Truck Owner";
+            description = "Delivery history tracked by the logistics company.";
+        } else {
+            image = title = description = null;
+            return badRequest();
+        }
+        return ok(data.render("Truck Simulator.", image, title, description));
+    }
 }
