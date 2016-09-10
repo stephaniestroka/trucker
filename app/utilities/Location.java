@@ -1,6 +1,6 @@
 package utilities;
 
-public class Coordinate {
+public class Location {
 
     /*-------------------------------------- LATITUDE --------------------------------------*/
     private double latitude;
@@ -24,7 +24,9 @@ public class Coordinate {
     }
     /*-------------------------------------- CONTROLLERS --------------------------------------*/
 
-    public Coordinate(double latitude, double longitude) {
+    public Location(){}
+
+    public Location(double latitude, double longitude) {
         this.longitude = longitude;
         this.latitude = latitude;
     }
