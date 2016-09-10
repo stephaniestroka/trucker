@@ -108,7 +108,7 @@ public class PushController extends Controller {
         
         if(!pushService.isJobInQueue(jobId) ||
                 !pushService.hasJobAResponse(jobId)){
-            return badRequest();
+            return ok();
         }
         PushResponse response = pushService.fetchResponse(jobId);
         return ok(Json.toJson(response));
