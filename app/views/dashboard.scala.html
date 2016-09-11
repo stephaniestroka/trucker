@@ -28,6 +28,12 @@
     </head>
      <!--position: absolute; width: 100%-->
     <body style="background-image: url('@routes.Assets.versioned(background)'); background-size: cover; position: absolute; width: 100%; height: 100%">
+
+        <audio id="audioStartTruck"><source src="@routes.Assets.versioned("audio/startTruck.ogg")" type="audio/ogg"></audio>
+        <audio id="audioDriving"><source src="@routes.Assets.versioned("audio/driving.ogg")" type="audio/ogg"></audio>
+        <audio id="audioAcceleration"><source src="@routes.Assets.versioned("audio/acceleration.ogg")" type="audio/ogg"></audio>
+        <audio id="audioBrake"><source src="@routes.Assets.versioned("audio/brake.ogg")" type="audio/ogg"></audio>
+
         <a href="/data/public"><img src="@routes.Assets.versioned("images/cloud_1_labeled.png")" style="position: absolute; top: 0; left: 0; margin-top: 30px;" width="300px"/></a>
         <a href="/data/man"><img src="@routes.Assets.versioned("images/cloud_2_labeled.png")" style="position: absolute; top: 0; right: 0; margin-top:30px;" width="300px"/></a>
         <a href="/data/employer"><img src="@routes.Assets.versioned("images/cloud_3_labeled.png")" style="position: absolute; bottom: 0; left: 0; margin-bottom: -30px;" width="300px"/></a>

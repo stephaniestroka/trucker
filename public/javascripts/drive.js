@@ -18,6 +18,8 @@ $(document).ready(function() {
             $("#btn_accelerate").removeClass("disabled");
             $("#btn_sleep").removeClass("disabled");
             $("#btn_startDrive").html("Stop");
+            Drive.stopStartTruckSound()
+            Drive.playDrivingSound();
         } else {
             Drive.stopDrive();
             $("#btn_startDrive").html("Start");
@@ -26,17 +28,28 @@ $(document).ready(function() {
             $("#btn_sleep").addClass("disabled");
             velocity = 0;
             Drive.updateSpeedometer();
+            Drive.stopDrivingSound();
         }
     });
     
     $("#btn_brake").click(function(){
         Drive.brake();
         Drive.updateSpeedometer();
+        Drive.stopDrivingSound();
+        Drive.playBrakeSound();
+        window.setTimeout(function(){
+                    Drive.playDrivingSound();
+                },1000)
     });
 
     $("#btn_accelerate").click(function(){
         Drive.accelarate();
         Drive.updateSpeedometer();
+        Drive.stopDrivingSound();
+        Drive.playAccelerationSound();
+        window.setTimeout(function(){
+            Drive.playDrivingSound();
+        },1500)
     });
 
     /************************** FUNCTIONS ****************************/
@@ -101,6 +114,45 @@ $(document).ready(function() {
         velocity = 0;
         Drive.updateSpeedometer();
     }
+
+    /************************** SOUNDS ****************************/
+
+    Drive.playStartTruckSound = function() {
+        var audio = document.getElementById("audioStartTruck");
+        audio.loop = true;
+        audio.play();
+    }
+
+    Drive.stopStartTruckSound = function() {
+        var audio = document.getElementById("audioStartTruck");
+        audio.pause();
+    }
+
+    Drive.playDrivingSound = function() {
+        var audio = document.getElementById("audioDriving");
+        audio.loop = true;
+        audio.play();
+    }
+
+    Drive.stopDrivingSound = function() {
+        var audio = document.getElementById("audioDriving");
+        audio.pause();
+    }
+
+    Drive.playAccelerationSound = function() {
+        var audio = document.getElementById("audioAcceleration");
+        audio.play();
+    }
+
+    Drive.playBrakeSound = function() {
+        var audio = document.getElementById("audioBrake");
+        audio.play();
+    }
+
+
+
+    /************************** RUNNING ****************************/
+    Drive.playStartTruckSound();
 });
 
 
