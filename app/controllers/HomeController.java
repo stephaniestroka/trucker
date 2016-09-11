@@ -41,7 +41,7 @@ public class HomeController extends Controller {
             title = "Personal Driver Profile";
             description = "The personal data of the driver.";
         } else if (type.equals("employer")) {
-            image = "images/cloud_3_labeled.png";
+            image = "images/cloud_3_labeled_partners.png";
             title = "Truck Owner";
             description = "Delivery history tracked by the logistics company.";
         } else {
