@@ -14,6 +14,8 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo.Id;
         property = "type"
 )
 @JsonSubTypes({
-    @Type(value = AuthenticationRequestAction.class)
+    @Type(value = AuthenticationRequestAction.class),
+    @Type(value = TakeBreakRequestAction.class),
+    @Type(value = SpeedRequestAction.class)
 })
 public abstract class RequestAction {}

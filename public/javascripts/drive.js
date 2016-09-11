@@ -56,10 +56,13 @@ $(document).ready(function() {
 
     Drive.updateSpeedometer = function() {
         $("#speedometer-value").html(velocity + " km/h");
+        var speedInJson = { "speed" : velocity };
         $.ajax({
             method: "PUT",
             url: "/push/send/speed/johnny@digitalid.net",
-            data: { }
+            contentType: "application/json",
+            data: JSON.stringify(speedInJson),
+            dataType: 'json'
         })
         .done(function( msg ) {
             console.log("Updating driver of the speed.")

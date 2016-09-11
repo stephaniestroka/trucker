@@ -17,7 +17,7 @@ import services.firebase.push.PushService;
 import services.firebase.push.request.PushRequest;
 import services.firebase.push.request.action.AuthenticationRequestAction;
 import services.firebase.push.request.action.RequestAction;
-import services.firebase.push.request.action.SpeedingWarningRequestAction;
+import services.firebase.push.request.action.SpeedRequestAction;
 import services.firebase.push.request.action.TakeBreakRequestAction;
 import services.firebase.push.response.PushResponse;
 import services.firebase.push.response.action.AuthenticationResponseAction;
@@ -37,7 +37,9 @@ public class PushController extends Controller {
         if (method.equals("login")) {
             requestAction = new AuthenticationRequestAction();
         } else if (method.equals("speed")) {
-            requestAction = new SpeedingWarningRequestAction();
+            JsonNode requestJson = request().body().asJson();
+            int speed = requestJson.get("speed").asInt(0);
+            requestAction = new SpeedRequestAction(speed);
         } else if (method.equals("sleep")) {
             requestAction = new TakeBreakRequestAction();
         } else {
@@ -105,16 +107,12 @@ public class PushController extends Controller {
     
     public Result getResponse(String jobIdString){
         UUID jobId = (UUID.fromString(jobIdString));
+        
         if(!pushService.isJobInQueue(jobId) ||
                 !pushService.hasJobAResponse(jobId)){
-            return badRequest();
+            return ok();
         }
         PushResponse response = pushService.fetchResponse(jobId);
-        if (response.getAction() instanceof AuthenticationResponseAction) {
-            if (((AuthenticationResponseAction) response.getAction()).isSuccess()) {
-                return redirect(routes.HomeController.simulation(1));
-            }
-        }
         return ok(Json.toJson(response));
     }
     
